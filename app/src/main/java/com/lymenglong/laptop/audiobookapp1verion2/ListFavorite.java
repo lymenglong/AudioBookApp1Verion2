@@ -1,15 +1,16 @@
 package com.lymenglong.laptop.audiobookapp1verion2;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.lymenglong.laptop.audiobookapp1verion2.adapter.MainAdapter;
+import com.lymenglong.laptop.audiobookapp1verion2.adapter.HistoryAdapter;
+import com.lymenglong.laptop.audiobookapp1verion2.customize.CustomActionBar;
 import com.lymenglong.laptop.audiobookapp1verion2.databases.DatabaseHelper;
-import com.lymenglong.laptop.audiobookapp1verion2.model.Home;
+import com.lymenglong.laptop.audiobookapp1verion2.model.Chapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -21,61 +22,52 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-
-public class MainActivity extends AppCompatActivity {
-    private RecyclerView homeList;
-    private ArrayList<Home> homes;
-    private Home homeModel;
-    private MainAdapter mainAdapter;
+public class ListFavorite extends AppCompatActivity{
+    private Activity activity = ListFavorite.this;
+    private RecyclerView listChapter;
+    private ArrayList<Chapter> chapters;
+    private HistoryAdapter adapter;
+    private Chapter chapterModel;
+    private CustomActionBar actionBar;
     private DatabaseHelper databaseHelper;
+    private String titleChapter;
+    private int idChapter;
     private static final String URL = "http://20121969.tk/audiobook/books/getAllBooks.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-//        ViewCompat.setImportantForAccessibility(getWindow().getDecorView(),ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
-//        ViewCompat.setImportantForAccessibility(getWindow().findViewById(R.id.activity_main),ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_YES);
-        /*View forename = findViewById(R.id.activity_main);
-        forename.setAccessibilityDelegate(new View.AccessibilityDelegate() {
-            public boolean performAccessibilityAction (View host, int action, Bundle args){
-                return true;
-            }
-        });*/
+        setContentView(R.layout.activity_history_favorite);
         getDataFromIntent();
-        initView();
-        initObject();
-//        getJSON(URL);
+        init();
     }
 
-    private void initObject() {
-        homes = databaseHelper.getHomeList();
-        mainAdapter = new MainAdapter(MainActivity.this, homes);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        homeList.setLayoutManager(mLinearLayoutManager);
-        homeList.setAdapter(mainAdapter);
-    }
-
+    /**
+     * Lấy dữ liệu thông qua intent
+     */
     private void getDataFromIntent() {
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-            Intent intent = new Intent(this, LoginActivity2.class);
-            startActivity(intent);
-        }
+        titleChapter = getIntent().getStringExtra("titleChapter");
+        idChapter = getIntent().getIntExtra("idChapter", -1);
     }
 
-    private void initView() {
-        homeList = (RecyclerView) findViewById(R.id.listView);
-        databaseHelper = new DatabaseHelper(this);
+    /**
+     * Khai báo các view và khởi tạo giá trị
+     */
+    private void init() {
+        actionBar = new CustomActionBar();
+        actionBar.eventToolbar(this, titleChapter, false);
+        listChapter = (RecyclerView) findViewById(R.id.list_small_chapter);
+
+        /*databaseHelper = new DatabaseHelper(this);
+        chapters = databaseHelper.getListChapter(idChapter);
+        adapter = new HistoryAdapter(ListHistory.this, chapters);
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
+        listChapter.setLayoutManager(mLinearLayoutManager);
+        listChapter.setAdapter(adapter);*/
+
+        getJSON(URL);
+
     }
-
-
-
-
-
-
-
-
 
     private void getJSON(final String urlWebService) {
 
@@ -91,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {
-                    getHomeList(s);
+                    getListFromJSON(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -100,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected String doInBackground(Void... voids) {
                 try {
-                    URL url = new URL(urlWebService);
+                    java.net.URL url = new URL(urlWebService);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     StringBuilder sb = new StringBuilder();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -119,17 +111,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void getHomeList(String json) throws JSONException {
+    public void getListFromJSON(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        ArrayList<Home> homes = new ArrayList<>();
+        ArrayList<Chapter> chapters = new ArrayList<>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            homeModel = new Home(obj.getInt("id"), obj.getString("name"));
-            homes.add(homeModel);
+//            if(obj.getInt("categoryid")== idChapter) {
+                chapterModel = new Chapter(obj.getInt("id"), obj.getString("name"),obj.getString("textcontent"),obj.getString("fileurl"));
+                chapters.add(chapterModel);
+//            }
         }
-        mainAdapter = new MainAdapter(MainActivity.this, homes);
+        adapter = new HistoryAdapter(activity, chapters);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        homeList.setLayoutManager(mLinearLayoutManager);
-        homeList.setAdapter(mainAdapter);
+        listChapter.setLayoutManager(mLinearLayoutManager);
+        listChapter.setAdapter(adapter);
     }
+
+
+
 }

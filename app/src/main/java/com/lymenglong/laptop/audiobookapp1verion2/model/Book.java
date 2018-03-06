@@ -1,21 +1,37 @@
 package com.lymenglong.laptop.audiobookapp1verion2.model;
 
 
-public class SmallChapter {
+public class Book {
     private int id;
     private String title;
     private String content;
+    private Boolean status; //when status is true, it means that you select audio book
 
-    public SmallChapter(int id, String title, String content) {
+    public Book(int id, String title, String content, Boolean status) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.status = status;
+    }
+
+    public Book(int id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
     }
-    public SmallChapter(int id, String title) {
+    public Book(int id, String title) {
         this.id = id;
         this.title = title;
     }
-    public SmallChapter() {
+    public Book() {
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     public int getId() {

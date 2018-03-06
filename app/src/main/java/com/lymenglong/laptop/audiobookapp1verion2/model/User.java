@@ -6,6 +6,61 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String username;
+    private String phonenumber;
+    private String identitynumber;
+    private String address;
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    private String birthday;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public String getIdentitynumber() {
+        return identitynumber;
+    }
+
+    public void setIdentitynumber(String identitynumber) {
+        this.identitynumber = identitynumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public User(int id, String name, String email) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+    }
+
+    public User() {
+    }
 
     public int getId() {
         return id;

@@ -9,37 +9,36 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lymenglong.laptop.audiobookapp1verion2.ListSmallChapter;
+import com.lymenglong.laptop.audiobookapp1verion2.ListHome;
 import com.lymenglong.laptop.audiobookapp1verion2.R;
-import com.lymenglong.laptop.audiobookapp1verion2.ViewReading;
-import com.lymenglong.laptop.audiobookapp1verion2.model.Chapter;
+import com.lymenglong.laptop.audiobookapp1verion2.model.Home;
 
 import java.util.ArrayList;
 
 
-public class AllChapterAdapter extends RecyclerView.Adapter {
-    private ArrayList<Chapter> chapters;
+public class MainAdapter extends RecyclerView.Adapter {
+    private ArrayList<Home> homes;
     private Activity activity;
     private View view;
 
-    public AllChapterAdapter(Activity activity, ArrayList<Chapter> chapters) {
-        this.chapters = chapters;
+    public MainAdapter(Activity activity, ArrayList<Home> homes) {
+        this.homes = homes;
         this.activity = activity;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
-        return new ChapterHolder(view);
+        return new HomeHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ChapterHolder) {
-            ChapterHolder chapterHolder = (ChapterHolder) holder;
+        if (holder instanceof HomeHolder) {
+            HomeHolder homeHolder = (HomeHolder) holder;
 
-            chapterHolder.name.setText(chapters.get(position).getTitle());
+            homeHolder.name.setText(homes.get(position).getTitle());
         }
 
     }
@@ -51,28 +50,27 @@ public class AllChapterAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return chapters.size();
+        return homes.size();
     }
 
-    class ChapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class HomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView name;
         private ImageView imgNext;
 
-        public ChapterHolder(View itemView) {
+        public HomeHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.nameStory);
             imgNext = (ImageView) itemView.findViewById(R.id.imgNext);
-
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(view == itemView) {
-                Intent intent = new Intent(activity, ViewReading.class);
-                intent.putExtra("titleChapter", chapters.get(getAdapterPosition()).getTitle());
-                intent.putExtra("content", chapters.get(getAdapterPosition()).getContent());
+            if(view == itemView){
+                Intent intent = new Intent(activity, ListHome.class);
+                intent.putExtra("idHome", homes.get(getAdapterPosition()).getId());
+                intent.putExtra("titleHome", homes.get(getAdapterPosition()).getTitle());
                 activity.startActivity(intent);
             }
         }

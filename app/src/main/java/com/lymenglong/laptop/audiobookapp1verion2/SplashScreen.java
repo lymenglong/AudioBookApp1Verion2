@@ -3,6 +3,7 @@ package com.lymenglong.laptop.audiobookapp1verion2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.Window;
@@ -23,6 +24,8 @@ public class SplashScreen extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash_screen);
+        //Set disable talk back
+        ViewCompat.setImportantForAccessibility(getWindow().getDecorView(),ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
 //        getSupportActionBar().hide();
         bindView();
     }
@@ -38,7 +41,7 @@ public class SplashScreen extends AppCompatActivity {
                 //Finish the splash activity so it can't be returned to.
                 SplashScreen.this.finish();
                 // Create an Intent that will start the main activity.
-                Intent mainIntent = new Intent(SplashScreen.this, LoginActivity.class);
+                Intent mainIntent = new Intent(SplashScreen.this, LoginActivity2.class);
                 startActivity(mainIntent);
                 //overridePendingTransition(R.anim.bottom_in,R.anim.top_out);
             }
@@ -56,6 +59,6 @@ public class SplashScreen extends AppCompatActivity {
         secretCreatorSplash.setText(Html.fromHtml(customHtmlCreator));
 
 //        secretTextviewSplash.startAnimation(AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fade_in));
-        secretCreatorSplash.startAnimation(AnimationUtils.loadAnimation(SplashScreen.this,R.anim.fade_in));
+        secretCreatorSplash.startAnimation(AnimationUtils.loadAnimation(SplashScreen.this, R.anim.fade_in));
     }
 }

@@ -1,21 +1,21 @@
 package com.lymenglong.laptop.audiobookapp1verion2.model;
 
 
-public class AllChapter {
+public class Category {
     private int id;
     private String title;
     private String content;
 
-    public AllChapter(int id, String title, String content) {
+    public Category(int id, String title, String content) {
         this.id = id;
         this.title = title;
         this.content = content;
     }
-    public AllChapter(int id, String title) {
+    public Category(int id, String title) {
         this.id = id;
         this.title = title;
     }
-    public AllChapter() {
+    public Category() {
     }
 
     public int getId() {

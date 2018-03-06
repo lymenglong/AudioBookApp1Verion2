@@ -5,9 +5,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.lymenglong.laptop.audiobookapp1verion2.model.BookType;
+import com.lymenglong.laptop.audiobookapp1verion2.model.Category;
 import com.lymenglong.laptop.audiobookapp1verion2.model.Chapter;
 import com.lymenglong.laptop.audiobookapp1verion2.model.Home;
-import com.lymenglong.laptop.audiobookapp1verion2.model.SmallChapter;
 import com.lymenglong.laptop.audiobookapp1verion2.model.Story;
 import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
@@ -21,21 +21,21 @@ public class DatabaseHelper extends SQLiteAssetHelper {
     private Story storyModel;
     private Home homeModel;
     private Chapter chapterModel;
-    private SmallChapter smallChapterModel;
+    private Category categoryModel;
     private BookType typeModel;
 
-    public static final String DBNAME = "DBManager5.sqlite";
-    public static final String  GET_ALL_STORY= "SELECT stID, stName FROM main";
+    public static final String DBNAME = "DBManager16.sqlite";
+    public static final String  GET_ALL_STORY= "SELECT categoryId, categoryName FROM category";
     public static final String  GET_ALL_HOME= "SELECT homeID, homeName FROM home";
     public static final String GET_CHAPTER_OF_STORY =
             "SELECT st_main.stID, st_main.dename, st_main.decontent "
-                    +"FROM main, st_main WHERE st_main.stID = main.stID and st_main.stID = ";
+                    +"FROM category, st_main WHERE st_main.stID = category.categoryId and st_main.stID = ";
     public static final String GET_ALL_CHAPTER =
-            "SELECT st_main.stID, st_main.dename, st_main.decontent "
-                    +"FROM main, st_main WHERE st_main.stID = main.stID and st_main.stID = ";
+            "SELECT st_main.stID, st_main.dename, st_main.decontent, st_main.fileUrl "
+                    +"FROM category, st_main WHERE st_main.stID = category.categoryId and st_main.stID = ";
     public static final String GET_ALL_SMALL_CHAPTER =
-            "SELECT main.stID, main.stName "
-                    +"FROM main, book_type WHERE main.auID = book_type.typeID and book_type.typeID = ";
+            "SELECT category.categoryId, category.categoryName "
+                    +"FROM category , book_type WHERE category.homeId = book_type.typeID and book_type.typeID = ";
 public static final String GET_TYPE_OF_BOOK =
             "SELECT book_type.typeID, book_type.typeName, book_type.homeID "
                     +"FROM home, book_type WHERE book_type.homeID = home.homeID and book_type.homeID = ";
@@ -52,6 +52,7 @@ public static final String GET_TYPE_OF_BOOK =
      * Lấy danh sách truyện
      * @return list truyện trong db
      */
+
     public ArrayList<Home> getHomeList() {
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
         ArrayList<Home> homes = new ArrayList<>();
@@ -113,7 +114,7 @@ public static final String GET_TYPE_OF_BOOK =
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
 
-            chapterModel = new Chapter(cursor.getInt(0), cursor.getString(1), cursor.getString(2));
+            chapterModel = new Chapter(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             chapters.add(chapterModel);
             cursor.moveToNext();
         }
@@ -122,19 +123,19 @@ public static final String GET_TYPE_OF_BOOK =
     }
 
 
-    public ArrayList<SmallChapter> getListSmallChapter(int id){
+    public ArrayList<Category> getListSmallChapter(int id){
         SQLiteDatabase sqLiteDatabase = getReadableDatabase();
-        ArrayList<SmallChapter> smallChapters = new ArrayList<>();
+        ArrayList<Category> categories = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.rawQuery(GET_ALL_SMALL_CHAPTER + String.valueOf(id), null);
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
 
-            smallChapterModel = new SmallChapter(cursor.getInt(0), cursor.getString(1));
-            smallChapters.add(smallChapterModel);
+            categoryModel = new Category(cursor.getInt(0), cursor.getString(1));
+            categories.add(categoryModel);
             cursor.moveToNext();
         }
         cursor.close();
-        return smallChapters;
+        return categories;
     }
 
 

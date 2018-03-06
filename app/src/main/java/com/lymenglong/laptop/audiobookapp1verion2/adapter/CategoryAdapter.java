@@ -9,36 +9,35 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lymenglong.laptop.audiobookapp1verion2.ListChapter;
+import com.lymenglong.laptop.audiobookapp1verion2.ListBook;
 import com.lymenglong.laptop.audiobookapp1verion2.R;
-import com.lymenglong.laptop.audiobookapp1verion2.model.Story;
+import com.lymenglong.laptop.audiobookapp1verion2.model.Category;
 
 import java.util.ArrayList;
 
 
-public class StoryAdapter extends RecyclerView.Adapter {
-    private ArrayList<Story> stories;
+public class CategoryAdapter extends RecyclerView.Adapter {
+    private ArrayList<Category> chapters;
     private Activity activity;
     private View view;
 
-    public StoryAdapter(Activity activity, ArrayList<Story> stories) {
-        this.stories = stories;
+    public CategoryAdapter(Activity activity, ArrayList<Category> chapters) {
+        this.chapters = chapters;
         this.activity = activity;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, parent, false);
-        return new StoryHolder(view);
+        return new ChapterHolder(view);
 
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof StoryHolder) {
-            StoryHolder storyHolder = (StoryHolder) holder;
-
-            storyHolder.name.setText(stories.get(position).getTitle());
+        if (holder instanceof ChapterHolder) {
+            ChapterHolder chapterHolder = (ChapterHolder) holder;
+            chapterHolder.name.setText(chapters.get(position).getTitle());
         }
 
     }
@@ -50,27 +49,29 @@ public class StoryAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return stories.size();
+        return chapters.size();
     }
 
-    class StoryHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ChapterHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private TextView name;
         private ImageView imgNext;
 
-        public StoryHolder(View itemView) {
+        public ChapterHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.nameStory);
             imgNext = (ImageView) itemView.findViewById(R.id.imgNext);
+
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if(view == itemView){
-                Intent intent = new Intent(activity, ListChapter.class);
-                intent.putExtra("idStory", stories.get(getAdapterPosition()).getId());
-                intent.putExtra("titleStory", stories.get(getAdapterPosition()).getTitle());
+            if(view == itemView) {
+                Intent intent = new Intent(activity, ListBook.class);
+                intent.putExtra("idChapter", chapters.get(getAdapterPosition()).getId());
+                intent.putExtra("titleChapter", chapters.get(getAdapterPosition()).getTitle());
+                intent.putExtra("content", chapters.get(getAdapterPosition()).getContent());
                 activity.startActivity(intent);
             }
         }
