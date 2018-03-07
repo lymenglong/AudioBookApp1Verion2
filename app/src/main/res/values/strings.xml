@@ -23,6 +23,10 @@
     <string name="text_accounts">All Accounts</string>
     <string name="text_account_info">Thông Tin Tải Khoản</string>
     <string name="hint_welcome">Chào mừng bạn đến với ứng sách nói</string>
+    <string name="hint_help">Hướng dẫn</string>
+    <string name="hint_accountInfo">Thông tin tài khoản</string>
+    <string name="hint_login">Xin mời đăng nhập tài khoản</string>
+    <string name="hint_register">Đăng ký tài khoản mới</string>
     <string name="hint_name">Tên</string>
     <string name="hint_email">Email</string>
     <string name="hint_email_or_username">Email hoặc tên đăng nhập</string>
