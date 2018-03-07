@@ -63,6 +63,7 @@ public class ListHome extends AppCompatActivity{
         setContentView(R.layout.activity_list_chapter);
 //        ViewCompat.setImportantForAccessibility(getWindow().getDecorView(),ViewCompat.IMPORTANT_FOR_ACCESSIBILITY_NO);
         getDataFromIntent();
+        setTitle(titleHome);
         initView();
         initObject();
     }

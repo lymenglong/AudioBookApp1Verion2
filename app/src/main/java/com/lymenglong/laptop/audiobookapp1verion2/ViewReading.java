@@ -55,6 +55,7 @@ public class ViewReading extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_reading);
         getDataFromIntent();
+        setTitle(titleChapter);
         initView();
         initObject();
         btnFavorite.setOnClickListener(new View.OnClickListener() {

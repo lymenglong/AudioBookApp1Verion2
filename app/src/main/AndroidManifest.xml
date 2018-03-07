@@ -23,6 +23,7 @@
         </activity>
         <activity
             android:name=".MainActivity"
+            android:label="@string/hint_home_screen"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />
@@ -42,6 +43,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
             android:name=".LoginActivity2"
+            android:label="@string/hint_welcome"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.RUN" />

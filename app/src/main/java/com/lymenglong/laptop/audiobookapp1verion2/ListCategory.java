@@ -28,6 +28,7 @@ public class ListCategory extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_book);
         getDataFromIntent();
+        setTitle(titleChapter);
         init();
     }
 

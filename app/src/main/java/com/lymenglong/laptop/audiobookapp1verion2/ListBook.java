@@ -48,6 +48,7 @@ public class ListBook extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_chapter);
         getDataFromIntent();
+        setTitle(titleChapter);
         init();
     }
 
