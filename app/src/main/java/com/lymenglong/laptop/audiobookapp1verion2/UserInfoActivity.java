@@ -232,7 +232,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
     public void showAlertDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Đãng Xuất Tài Khoản");
+//        builder.setTitle("Đãng Xuất Tài Khoản");
         builder.setMessage("Bạn có muốn đăng xuất không?");
         builder.setCancelable(false);
         builder.setPositiveButton("Thoát", new DialogInterface.OnClickListener() {
